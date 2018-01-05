@@ -1,0 +1,42 @@
+<html>
+<script src="paho-mqtt.js"> </script>
+<script>
+// Create a client instance
+client = new Paho.MQTT.Client("", , "");
+//argument1   host
+//argument2   port
+//argument3   clientid
+
+// set callback handlers
+client.onConnectionLost = onConnectionLost;
+client.onMessageArrived = onMessageArrived;
+
+// connect the client
+
+client.connect({userName:'',password:'',onSuccess:onConnect});
+
+
+// called when the client connects
+function onConnect() {
+  // Once a connection has been made, make a subscription and send a message.
+  console.log("onConnect");
+  client.subscribe("tp_traffic_big_screen");
+}
+
+// called when the client loses its connection
+function onConnectionLost(responseObject) {
+  console.log(responseObject)
+  if (responseObject.errorCode !== 0) {
+    console.log("onConnectionLost:"+responseObject.errorMessage);
+  }
+}
+
+// called when a message arrives
+function onMessageArrived(message) {
+    console.log("onMessageArrived:" ,message);
+    // console.log("onMessageArrived:" + message.payloadString);
+}
+</script>
+<body>
+</body>
+</html>
